@@ -15,7 +15,7 @@ import javafx.fxml.FXMLLoader;
  * Create a JavaFX user interface with 1 input view
  * and 2 observers that show the counter value, so that all
  * the views refer to the same Counter object.
- * 
+ * @author Korawit Rupanya
  */
 public class Main extends Application {
 	
@@ -38,11 +38,11 @@ public class Main extends Application {
 			// This is interesting -- we don't need to use a cast!
 			ClickController controller = loader.getController();
 			
+			
 			// Dependency Injection:
 			// Set the Counter object we want the view to update.
+			controller.setCounter(counter);
 			
-			//TODO set a reference to Counter in the controller
-
 			// Build and show the scene
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
@@ -58,18 +58,15 @@ public class Main extends Application {
 		// Dependency Injection: 
 		// We set a reference to the counter using the constructor.
 		
-		//TODO Create a ConsoleView with dependency injection.
+	
+		ConsoleView view = new ConsoleView(counter);
 		
-		//TODO Add ConsoleView as an observer of Counter
-		
+		counter.addObserver(view);
 		
 		// Create another window that references the SAME counter. 
-		
-		//TODO: Complete the CounterView class.
-		//CounterView view = new CounterView(counter);
-		
-		//TODO Add CounterView as observer.
-		//TODO Show CounterView by calling its run() method
+		CounterView view2 = new CounterView(counter);
+		counter.addObserver(view2);
+		view2.run();
 	}
 	
 	public static void main(String[] args) {
